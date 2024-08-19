@@ -21,7 +21,8 @@
     "react-dom": "^18",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "zustand": "^4.5.2"
+    "zustand": "^4.5.2",
+    "@supabase/ssr": "^0.3.0"
   },
   "devDependencies": {
     "@types/node": "^20",
