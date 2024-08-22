@@ -10,7 +10,7 @@ export default async function Home() {
     <main>
       main page
       <h1>{session?.user.email}</h1>
-      <LogoutButton>로그아웃</LogoutButton>
+      {session?.user && <LogoutButton>로그아웃</LogoutButton>}
     </main>
   );
 }
