@@ -10,8 +10,10 @@
     "generate-types": "npx supabase gen types typescript --project-id oumnhrcxhgkpbpndhwbd --schema public > types_db.ts"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.3.0",
     "@tanstack/react-query": "^5.36.0",
     "@tanstack/react-query-devtools": "^5.36.0",
+    "@use-funnel/next": "^0.0.3",
     "axios": "^1.7.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -21,8 +23,7 @@
     "react-dom": "^18",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
-    "zustand": "^4.5.2",
-    "@supabase/ssr": "^0.3.0"
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20",

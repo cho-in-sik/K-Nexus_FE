@@ -4,6 +4,7 @@ import { type CookieOptions, createServerClient } from '@supabase/ssr';
 import { createServerSupabaseClient } from '@/app/utils/supabase/server';
 
 export async function GET(request: Request) {
+  console.log(1);
   const { searchParams, origin } = new URL(request.url);
   const code = searchParams.get('code');
   // if "next" is in param, use it as the redirect URL
