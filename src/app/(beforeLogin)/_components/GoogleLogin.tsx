@@ -13,8 +13,12 @@ export default function GoogleLogin() {
           access_type: 'offline',
           prompt: 'consent',
         },
+        redirectTo: process.env.NEXT_PUBLIC_VERCEL_URL
+          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/auth/callback`
+          : 'http://localhost:3000/auth/callback',
       },
     });
+
     console.log(data);
   };
   return (

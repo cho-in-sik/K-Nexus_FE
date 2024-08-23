@@ -1,8 +1,13 @@
 import { create } from 'zustand';
 
-export const useOnBoarding = create((set) => ({
+interface OnBoardingState {
+  steps: string[];
+  setSteps: (newStep: string) => void;
+}
+
+export const useOnBoarding = create<OnBoardingState>((set) => ({
   steps: [],
-  setMemos: (newStep: string) =>
+  setSteps: (newStep: string) =>
     set((prev: any) => ({
       steps: [...prev.steps, newStep],
     })),
