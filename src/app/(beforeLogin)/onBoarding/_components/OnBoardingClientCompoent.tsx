@@ -29,8 +29,7 @@ export default function OnBoardingClientComponent() {
       setSelectedValue('');
     }
   };
-  console.log(step);
-  console.log(steps);
+
   return (
     <div className="h-screen flex justify-center items-center">
       {step === 0 ? (
