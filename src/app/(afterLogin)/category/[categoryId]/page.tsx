@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import BackButton from '../_components/BackButton';
+import BackButton from '../../_components/BackButton';
 
 export default function Page() {
   const { categoryId } = useParams();

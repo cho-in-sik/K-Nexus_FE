@@ -7,14 +7,18 @@ export default function Page() {
     <div className="">
       <h1 className="text-center mt-5 mb-10">Chat List</h1>
       <div className="w-full">
-        <button className="btn w-full badge-lg mb-3">
-          Inbox
-          <div className="badge">+99</div>
-        </button>
-        <button className="btn w-full badge-lg">
-          Inbox
-          <div className="badge">category</div>
-        </button>
+        <Link href={'/chat/1'}>
+          <button className="btn w-full badge-lg mb-3">
+            Inbox
+            <div className="badge">+99</div>
+          </button>
+        </Link>
+        <Link href={'/chat/2'}>
+          <button className="btn w-full badge-lg">
+            Inbox
+            <div className="badge">category</div>
+          </button>
+        </Link>
       </div>
 
       <div className="absolute bottom-28 right-10">
