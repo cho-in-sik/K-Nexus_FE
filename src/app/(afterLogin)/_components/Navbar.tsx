@@ -16,7 +16,7 @@ export default function NavBar() {
           <span className="text-xs text-[#A2A2A2]">home</span>
         </div>
       </button>
-      <button onClick={() => navigate.push('/home')} className="">
+      <button onClick={() => navigate.push('/chat')} className="">
         <Image src={chat} alt="chat" />
       </button>
       <button onClick={() => navigate.push('/settings')}>

@@ -1,15 +1,18 @@
 'use client';
 
 import { useParams } from 'next/navigation';
+import BackButton from '../_components/BackButton';
 
 export default function Page() {
   const { categoryId } = useParams();
-  console.log(categoryId);
+
   return (
     <div className="h-screen">
+      <BackButton />
       <div className="text-lg font-medium text-center mt-12 mb-24">
         {categoryId}
       </div>
+
       <div className="w-full flex justify-center items-center mb-8">
         <div className="h-48 w-48 bg-[#D9D9D9] rounded-full"></div>
       </div>
