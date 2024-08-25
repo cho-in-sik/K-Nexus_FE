@@ -4,6 +4,8 @@ import BackButton from '../../_components/BackButton';
 import Image from 'next/image';
 import smallRobot from '@/../public/svgs/chat/robot.svg';
 import sound from '@/../public/svgs/chat/sound.svg';
+import mic from '@/../public/svgs/chat/mic.svg';
+import send from '@/../public/svgs/chat/send.svg';
 
 export default function Page() {
   return (
@@ -55,6 +57,20 @@ export default function Page() {
           <div className="chat-bubble bg-[#3369FF] text-white">
             Not leave it in Darkness
           </div>
+        </div>
+      </div>
+
+      <div className="fixed bottom-28 w-11/12 h-14 rounded-3xl shadow-xl flex justify-center items-center gap-2">
+        <input
+          type="text"
+          className="w-full rounded-3xl pl-5 placeholder:text-xs outline-none"
+          placeholder="Write your message or talk"
+        />
+        <div>
+          <Image src={mic} alt="mic" />
+        </div>
+        <div className="mr-3">
+          <Image src={send} alt="send" />
         </div>
       </div>
     </div>
