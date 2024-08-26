@@ -17,6 +17,7 @@ export type Database = {
           id: string
           name: string | null
           onBoarding: boolean | null
+          onBoardingInfo: string[] | null
         }
         Insert: {
           created_at?: string
@@ -25,6 +26,7 @@ export type Database = {
           id?: string
           name?: string | null
           onBoarding?: boolean | null
+          onBoardingInfo?: string[] | null
         }
         Update: {
           created_at?: string
@@ -33,6 +35,7 @@ export type Database = {
           id?: string
           name?: string | null
           onBoarding?: boolean | null
+          onBoardingInfo?: string[] | null
         }
         Relationships: [
           {

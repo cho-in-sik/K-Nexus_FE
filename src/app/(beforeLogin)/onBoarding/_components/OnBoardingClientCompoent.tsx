@@ -1,4 +1,5 @@
 'use client';
+
 import { createOnboradingInfo } from '@/actions/onBoarding';
 import { onBoardingData } from '@/app/constants/onBoarding';
 
@@ -17,8 +18,15 @@ export default function OnBoardingClientComponent({ id }: any) {
   const navigate = useRouter();
 
   const updateMutation = useMutation({
-    mutationFn: () => createOnboradingInfo(steps, id),
+    mutationFn: async () => {
+      const data = await createOnboradingInfo(steps, id);
+
+      return data;
+    },
     onSuccess: () => alert('success'),
+    onError: () => {
+      alert('Failed to update onboarding info');
+    },
   });
 
   useEffect(() => {
