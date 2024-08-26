@@ -19,8 +19,7 @@ export default function OnBoardingClientComponent({ id }: any) {
 
   const updateMutation = useMutation({
     mutationFn: async () => {
-      const data = await createOnboradingInfo(steps, id);
-
+      const data = await createOnboradingInfo({ steps, id });
       return data;
     },
     onSuccess: () => alert('success'),
@@ -39,8 +38,18 @@ export default function OnBoardingClientComponent({ id }: any) {
     if (step === 0) {
       setStep(1); // Onboarding 시작
     } else if (step === 3) {
+      if (selectedValue) {
+        const updatedSteps = [...steps];
+        updatedSteps[step - 1] = selectedValue; // step 3에 선택된 값 저장
+        setSteps(updatedSteps);
+      }
       updateMutation.mutate();
     } else {
+      if (selectedValue) {
+        const updatedSteps = [...steps];
+        updatedSteps[step - 1] = selectedValue; // step 1, 2에 선택된 값 저장
+        setSteps(updatedSteps);
+      }
       setStep(step + 1);
       setDisabled(true);
       setSelectedValue('');
@@ -49,7 +58,6 @@ export default function OnBoardingClientComponent({ id }: any) {
 
   const handleSelection = (item: string) => {
     setSelectedValue(item);
-    setSteps(item);
     setDisabled(false);
   };
 
@@ -64,7 +72,7 @@ export default function OnBoardingClientComponent({ id }: any) {
           <h1>Kolang will help you!</h1>
         </div>
       ) : (
-        <div className="flex-auto text-lg ">
+        <div className="flex-auto text-lg">
           <h1 className="mb-8 leading-6">{onBoardingData[step - 1].title}</h1>
           <div className="flex flex-col gap-2 mb-10">
             {onBoardingData[step - 1].content.map((item, i) => (

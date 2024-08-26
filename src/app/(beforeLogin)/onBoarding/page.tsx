@@ -7,6 +7,5 @@ export default async function Page() {
     data: { session },
   } = await supabase.auth.getSession();
 
-  console.log('session', session?.user.id);
   return <OnBoardingClientComponent id={session?.user.id} />;
 }

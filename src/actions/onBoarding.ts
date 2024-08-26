@@ -6,18 +6,18 @@ function handleError(error: any) {
   throw new Error(error);
 }
 
-export async function createOnboradingInfo(steps: any, id: any) {
+export async function createOnboradingInfo({ steps, id }: any) {
   const supabase = await createServerSupabaseClient();
+  console.log(steps);
 
   const { data, error } = await supabase
     .from('users')
-    .update({ onBoardingInfo: steps })
+    .update({ onBoardingInfo: steps, onBoarding: true })
     .eq('id', id);
 
   if (error) {
     handleError(error);
   }
-  console.log('data', data);
 
   return data;
 }
