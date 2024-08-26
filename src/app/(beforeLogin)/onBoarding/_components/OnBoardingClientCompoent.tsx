@@ -1,17 +1,25 @@
 'use client';
+import { createOnboradingInfo } from '@/actions/onBoarding';
 import { onBoardingData } from '@/app/constants/onBoarding';
 
 import { useOnBoarding } from '@/hooks/useOnBoarding';
+import { useMutation } from '@tanstack/react-query';
+
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function OnBoardingClientComponent() {
+export default function OnBoardingClientComponent({ id }: any) {
   const { setSteps, steps } = useOnBoarding();
   const [step, setStep] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [selectedValue, setSelectedValue] = useState('');
 
   const navigate = useRouter();
+
+  const updateMutation = useMutation({
+    mutationFn: () => createOnboradingInfo(steps, id),
+    onSuccess: () => alert('success'),
+  });
 
   useEffect(() => {
     if (step > 3) {
@@ -22,13 +30,23 @@ export default function OnBoardingClientComponent() {
   const handleNext = () => {
     if (step === 0) {
       setStep(1); // Onboarding 시작
+    } else if (step === 3) {
+      updateMutation.mutate();
     } else {
-      setSteps(selectedValue);
       setStep(step + 1);
       setDisabled(true);
       setSelectedValue('');
     }
   };
+
+  const handleSelection = (item: string) => {
+    setSelectedValue(item);
+    setSteps(item);
+    setDisabled(false);
+  };
+
+  console.log('step', step);
+  console.log('steps', steps);
 
   return (
     <div className="h-screen flex justify-center items-center">
@@ -49,10 +67,7 @@ export default function OnBoardingClientComponent() {
                     ? 'bg-[#DFEDFF] text-[#4f5358] border-[#2771D0]'
                     : 'bg-[#F5F5F6] border-[#E7E9EC]'
                 }`}
-                onClick={() => {
-                  setSelectedValue(item);
-                  setDisabled(false);
-                }}
+                onClick={() => handleSelection(item)}
               >
                 {item}
               </button>
