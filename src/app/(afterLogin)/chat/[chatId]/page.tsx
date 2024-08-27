@@ -1,3 +1,5 @@
+'use client';
+
 import robot from '@/../public/images/robot.png';
 import online from '@/../public/svgs/chat/online.svg';
 import BackButton from '../../_components/BackButton';
@@ -6,8 +8,13 @@ import smallRobot from '@/../public/svgs/chat/robot.svg';
 import sound from '@/../public/svgs/chat/sound.svg';
 import mic from '@/../public/svgs/chat/mic.svg';
 import send from '@/../public/svgs/chat/send.svg';
+import { getSpeech } from '@/app/utils/getSpeech';
 
 export default function Page() {
+  const handleButton = () => {
+    console.log(1);
+    getSpeech('asdawddasd');
+  };
   return (
     <div>
       <BackButton />
@@ -41,7 +48,7 @@ export default function Page() {
               It was said that you would, destroy the Sith, not join them.
             </span>
 
-            <Image src={sound} alt="sound" />
+            <Image src={sound} alt="sound" onClick={handleButton} />
           </div>
         </div>
 

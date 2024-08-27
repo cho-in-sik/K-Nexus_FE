@@ -1,4 +1,5 @@
 import BackButton from '../../_components/BackButton';
+import Test from '../_components/Test';
 
 type Params = {
   params: {
@@ -15,7 +16,6 @@ export default function Page({ params }: Params) {
       <div className="text-lg font-medium text-center mt-12 mb-24">
         {categoryId}
       </div>
-
       <div className="w-full flex justify-center items-center mb-8">
         <div className="h-48 w-48 bg-[#D9D9D9] rounded-full"></div>
       </div>
@@ -23,6 +23,7 @@ export default function Page({ params }: Params) {
         <h6>안녕하세요</h6>
         <h6>무엇을 도와드릴까요?</h6>
       </div>
+      <Test />
     </div>
   );
 }
