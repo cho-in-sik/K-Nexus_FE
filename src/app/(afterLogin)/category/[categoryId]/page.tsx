@@ -1,10 +1,13 @@
-'use client';
-
-import { useParams } from 'next/navigation';
 import BackButton from '../../_components/BackButton';
 
-export default function Page() {
-  const { categoryId } = useParams();
+type Params = {
+  params: {
+    categoryId: string;
+  };
+};
+
+export default function Page({ params }: Params) {
+  const { categoryId } = params;
 
   return (
     <div className="h-screen">

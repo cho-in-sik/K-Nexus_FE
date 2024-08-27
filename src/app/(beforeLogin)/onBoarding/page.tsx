@@ -1,6 +1,7 @@
 import { createServerSupabaseClient } from '@/app/utils/supabase/server';
 import OnBoardingClientComponent from './_components/OnBoardingClientCompoent';
 import { redirect } from 'next/navigation';
+import { confirmOnborading } from '@/actions/onBoarding';
 
 export default async function Page() {
   const supabase = await createServerSupabaseClient();
@@ -10,11 +11,7 @@ export default async function Page() {
   } = await supabase.auth.getUser();
   const uid = user?.id;
 
-  const { data: onboarding } = await supabase
-    .from('users')
-    .select('onboarding')
-    .eq('id', uid)
-    .single();
+  const onboarding = await confirmOnborading({ uid });
 
   if (onboarding?.onboarding) {
     redirect('/home');

@@ -8,6 +8,21 @@ function handleError(error: any) {
   throw new Error(error);
 }
 
+export async function confirmOnborading({ uid }: any) {
+  const supabase = await createServerSupabaseClient();
+  const { data, error } = await supabase
+    .from('users')
+    .select('onboarding')
+    .eq('id', uid)
+    .single();
+
+  if (error) {
+    handleError(error);
+  }
+
+  return data;
+}
+
 export async function createOnboradingInfo({
   steps,
   id,
