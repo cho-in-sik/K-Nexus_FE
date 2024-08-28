@@ -1,9 +1,10 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 
-function Test() {
+export function Test() {
   const [isRecording, setIsRecording] = useState(false);
   const [transcription, setTranscription] = useState('');
+  const [audioURL, setAudioURL] = useState<string | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
 
@@ -21,16 +22,21 @@ function Test() {
         const audioBlob = new Blob(audioChunksRef.current, {
           type: 'audio/webm',
         });
-        const formData = new FormData();
-        formData.append('audio', audioBlob);
+        const audioUrl = URL.createObjectURL(audioBlob);
+        setAudioURL(audioUrl);
 
-        const response = await fetch('http://localhost:3000/upload', {
-          method: 'POST',
-          body: formData,
-        });
+        // const formData = new FormData();
+        // formData.append('audio', audioBlob);
 
-        const result = await response.json();
-        setTranscription(result.transcription);
+        // console.log(audioBlob);
+
+        // const response = await fetch('http://localhost:3000/upload', {
+        //   method: 'POST',
+        //   body: formData,
+        // });
+
+        // const result = await response.json();
+        // setTranscription(result.transcription);
       }
     };
 
@@ -50,6 +56,12 @@ function Test() {
       <button onClick={isRecording ? stopRecording : startRecording}>
         {isRecording ? 'Stop Recording' : 'Start Recording'}
       </button>
+      {audioURL && (
+        <div>
+          <h2>Recorded Audio:</h2>
+          <audio controls src={audioURL}></audio>
+        </div>
+      )}
       {transcription && (
         <div>
           <h2>Transcription:</h2>
@@ -59,5 +71,3 @@ function Test() {
     </div>
   );
 }
-
-export default Test;

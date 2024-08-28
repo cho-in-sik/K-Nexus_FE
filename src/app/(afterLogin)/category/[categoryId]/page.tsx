@@ -1,5 +1,5 @@
 import BackButton from '../../_components/BackButton';
-import Test from '../_components/Test';
+import { Test } from '../_components/Test';
 
 type Params = {
   params: {

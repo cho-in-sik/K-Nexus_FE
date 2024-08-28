@@ -13,7 +13,7 @@ import { getSpeech } from '@/app/utils/getSpeech';
 export default function Page() {
   const handleButton = () => {
     console.log(1);
-    getSpeech('asdawddasd');
+    getSpeech('티티에스');
   };
   return (
     <div>
