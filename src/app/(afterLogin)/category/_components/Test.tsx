@@ -52,8 +52,11 @@ export function Test() {
   };
 
   return (
-    <div>
-      <button onClick={isRecording ? stopRecording : startRecording}>
+    <div className="flex flex-col justify-center items-center">
+      <button
+        className="btn bg-blue-600 text-white"
+        onClick={isRecording ? stopRecording : startRecording}
+      >
         {isRecording ? 'Stop Recording' : 'Start Recording'}
       </button>
       {audioURL && (
