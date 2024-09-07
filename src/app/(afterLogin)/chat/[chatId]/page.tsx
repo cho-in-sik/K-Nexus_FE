@@ -9,12 +9,41 @@ import sound from '@/../public/svgs/chat/sound.svg';
 import mic from '@/../public/svgs/chat/mic.svg';
 import send from '@/../public/svgs/chat/send.svg';
 import { getSpeech } from '@/app/utils/getSpeech';
+import { useState } from 'react';
+import { sendChat } from '@/actions/chat';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import { useParams } from 'next/navigation';
 
 export default function Page() {
+  const { chatId } = useParams();
+  console.log(chatId);
+
+  const [text, setText] = useState('');
+
   const handleButton = () => {
     console.log(1);
     getSpeech('티티에스');
   };
+
+  const getAllMessagesQuery = useQuery({
+    queryKey: ['chatMessages', chatId],
+  });
+
+  const sendMessageMutation = useMutation({
+    mutationFn: async () => {
+      sendChat({
+        message: text,
+        category: chatId,
+        ai_answer: false,
+      });
+    },
+    onSuccess: () => {
+      setText('');
+      console.log('success');
+      // getAllMessagesQuery.refetch();
+    },
+  });
   return (
     <div>
       <BackButton />
@@ -72,11 +101,13 @@ export default function Page() {
           type="text"
           className="w-full rounded-3xl pl-5 placeholder:text-xs outline-none"
           placeholder="Write your message or talk"
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
         <div>
           <Image src={mic} alt="mic" />
         </div>
-        <div className="mr-3">
+        <div className="mr-3" onClick={() => sendMessageMutation.mutate()}>
           <Image src={send} alt="send" />
         </div>
       </div>
