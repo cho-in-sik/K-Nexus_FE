@@ -23,7 +23,7 @@ export async function getAllMessages(category: any) {
     .from('messages')
     .select('*')
     .eq('sender', session.user.id)
-    .eq('category', category)
+    .eq('chatId', category)
     .order('created_at', { ascending: true });
 
   if (messageError) {
@@ -33,7 +33,7 @@ export async function getAllMessages(category: any) {
   return data;
 }
 
-export async function sendChat({ message, category, ai_answer }: any) {
+export async function sendChat({ message, chatId, ai_answer }: any) {
   const supabase = await createServerSupabaseClient();
 
   const {
@@ -47,7 +47,7 @@ export async function sendChat({ message, category, ai_answer }: any) {
 
   const { data, error } = await supabase.from('messages').insert({
     message,
-    category,
+    chatId,
     sender: session.user.id,
     ai_answer,
   });

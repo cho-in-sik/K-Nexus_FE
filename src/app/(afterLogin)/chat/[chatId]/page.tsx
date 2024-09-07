@@ -35,7 +35,7 @@ export default function Page() {
     mutationFn: async () => {
       sendChat({
         message: text,
-        category: chatId,
+        chatId,
         ai_answer: false,
       });
     },

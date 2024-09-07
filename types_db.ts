@@ -9,10 +9,42 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      "chat-lists": {
+        Row: {
+          category: string | null
+          created_at: string
+          id: number
+          summary: string | null
+          user_id: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          id?: number
+          summary?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          id?: number
+          summary?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat-lists_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       messages: {
         Row: {
           ai_answer: boolean | null
-          category: string | null
+          chatId: string | null
           created_at: string
           id: number
           is_deleted: boolean | null
@@ -21,7 +53,7 @@ export type Database = {
         }
         Insert: {
           ai_answer?: boolean | null
-          category?: string | null
+          chatId?: string | null
           created_at?: string
           id?: number
           is_deleted?: boolean | null
@@ -30,7 +62,7 @@ export type Database = {
         }
         Update: {
           ai_answer?: boolean | null
-          category?: string | null
+          chatId?: string | null
           created_at?: string
           id?: number
           is_deleted?: boolean | null
