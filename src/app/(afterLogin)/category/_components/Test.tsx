@@ -25,6 +25,10 @@ export function Test() {
         const audioUrl = URL.createObjectURL(audioBlob);
         setAudioURL(audioUrl);
 
+        //AI 통신 서버 구축되면 여기로직으로 통신해보기 blob형태로 주고받기
+        //FAST API
+        //받으면 바로 음성으로 출력해줘야하는데 util에 만들어 놓은 함수로 송출 ? (tts)
+
         // const formData = new FormData();
         // formData.append('audio', audioBlob);
 

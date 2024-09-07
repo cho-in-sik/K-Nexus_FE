@@ -24,6 +24,7 @@ export default function Page({ params }: Params) {
         <h6>무엇을 도와드릴까요?</h6>
       </div>
       <Test />
+      {/* daf 테스트 안에서 텍스트 전부 보여주기 테스트는 통신 컴포넌트 & 결과 확인 컴포넌트가 같이 있는 방향으로  */}
     </div>
   );
 }
