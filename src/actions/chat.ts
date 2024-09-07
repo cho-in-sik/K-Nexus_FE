@@ -7,6 +7,31 @@ function handleError(error: any) {
   throw new Error(error);
 }
 
+export async function getAllChatLists() {
+  const supabase = await createServerSupabaseClient();
+
+  const {
+    data: { session },
+    error,
+  } = await supabase.auth.getSession();
+
+  if (error || !session?.user) {
+    throw new Error('세션에러발생');
+  }
+
+  const { data, error: messageError } = await supabase
+    .from('chat-lists')
+    .select('*')
+    .eq('user_id', session.user.id)
+    .order('created_at', { ascending: true });
+
+  if (messageError) {
+    throw new Error('에러발생');
+  }
+
+  return data;
+}
+
 export async function getAllMessages(category: any) {
   const supabase = await createServerSupabaseClient();
 

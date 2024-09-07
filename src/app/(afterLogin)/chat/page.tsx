@@ -1,24 +1,20 @@
 import Image from 'next/image';
 import plus from '@/../public/svgs/plus.svg';
 import Link from 'next/link';
+import { createServerSupabaseClient } from '@/app/utils/supabase/server';
+import ChatListBox from './_components/chatListBox';
 
-export default function Page() {
+export default async function Page() {
+  const supabase = await createServerSupabaseClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
     <div className="">
       <h1 className="text-center mt-5 mb-10">Chat List</h1>
       <div className="w-full">
-        <Link href={'/chat/1'}>
-          <button className="btn w-full badge-lg mb-3">
-            Inbox
-            <div className="badge">+99</div>
-          </button>
-        </Link>
-        <Link href={'/chat/2'}>
-          <button className="btn w-full badge-lg">
-            Inbox
-            <div className="badge">category</div>
-          </button>
-        </Link>
+        <ChatListBox session={session} />
       </div>
 
       <div className="absolute bottom-28 right-10">
