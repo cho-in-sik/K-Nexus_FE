@@ -10,14 +10,13 @@ import mic from '@/../public/svgs/chat/mic.svg';
 import send from '@/../public/svgs/chat/send.svg';
 import { getSpeech } from '@/app/utils/getSpeech';
 import { useState } from 'react';
-import { sendChat } from '@/actions/chat';
+import { getAllMessages, sendChat } from '@/actions/chat';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { useParams } from 'next/navigation';
 
 export default function Page() {
   const { chatId } = useParams();
-  console.log(chatId);
 
   const [text, setText] = useState('');
 
@@ -28,7 +27,9 @@ export default function Page() {
 
   const getAllMessagesQuery = useQuery({
     queryKey: ['chatMessages', chatId],
+    queryFn: () => getAllMessages(chatId),
   });
+  console.log(getAllMessagesQuery.data);
 
   const sendMessageMutation = useMutation({
     mutationFn: async () => {
@@ -41,7 +42,7 @@ export default function Page() {
     onSuccess: () => {
       setText('');
       console.log('success');
-      // getAllMessagesQuery.refetch();
+      getAllMessagesQuery.refetch();
     },
   });
   return (
@@ -66,34 +67,39 @@ export default function Page() {
         </div>
       </div>
       <div className="font-mono">
-        <div className="chat chat-start mb-3">
-          <div className="chat-image avatar">
-            <div className="w-8 rounded-full shadow-xl">
-              <Image alt="robot" src={smallRobot} />
-            </div>
-          </div>
-          <div className="chat-bubble bg-[#EEE] text-black flex">
-            <span>
-              It was said that you would, destroy the Sith, not join them.
-            </span>
+        {/* 여기에서 채팅 뿌려주기 */}
+        {getAllMessagesQuery.data?.map((chat) => (
+          <div key={chat.id}>
+            {chat.ai_answer ? (
+              <div className="chat chat-start mb-3">
+                <div className="chat-image avatar">
+                  <div className="w-8 rounded-full shadow-xl">
+                    <Image alt="robot" src={smallRobot} />
+                  </div>
+                </div>
+                <div className="chat-bubble bg-[#EEE] text-black flex">
+                  <span>{chat.message}</span>
 
-            <Image src={sound} alt="sound" onClick={handleButton} />
+                  <Image src={sound} alt="sound" onClick={handleButton} />
+                </div>
+              </div>
+            ) : (
+              <div className="chat chat-end">
+                <div className="chat-image avatar">
+                  <div className="w-8 rounded-full">
+                    <img
+                      alt="Tailwind CSS chat bubble component"
+                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    />
+                  </div>
+                </div>
+                <div className="chat-bubble bg-[#3369FF] text-white">
+                  {chat.message}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-
-        <div className="chat chat-end">
-          <div className="chat-image avatar">
-            <div className="w-8 rounded-full">
-              <img
-                alt="Tailwind CSS chat bubble component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-              />
-            </div>
-          </div>
-          <div className="chat-bubble bg-[#3369FF] text-white">
-            Not leave it in Darkness
-          </div>
-        </div>
+        ))}
       </div>
 
       <div className="fixed bottom-28 w-11/12 h-14 rounded-3xl shadow-xl flex justify-center items-center gap-2">

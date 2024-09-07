@@ -7,7 +7,7 @@ function handleError(error: any) {
   throw new Error(error);
 }
 
-export async function getAllMessages() {
+export async function getAllMessages(category: any) {
   const supabase = await createServerSupabaseClient();
 
   const {
@@ -23,6 +23,7 @@ export async function getAllMessages() {
     .from('messages')
     .select('*')
     .eq('sender', session.user.id)
+    .eq('category', category)
     .order('created_at', { ascending: true });
 
   if (messageError) {
