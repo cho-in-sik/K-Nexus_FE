@@ -26,7 +26,7 @@ export async function getAllChatLists() {
     .order('created_at', { ascending: true });
 
   if (messageError) {
-    throw new Error('에러발생');
+    throw new Error('getAllChatLists 에러발생');
   }
 
   return data;
@@ -52,7 +52,7 @@ export async function getAllMessages(category: any) {
     .order('created_at', { ascending: true });
 
   if (messageError) {
-    throw new Error('에러발생');
+    throw new Error('getAllMessages 에러발생');
   }
 
   return data;
