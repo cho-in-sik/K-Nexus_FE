@@ -10,6 +10,8 @@ type Params = {
 export default function Page({ params }: Params) {
   const { categoryId } = params;
 
+  console.log(categoryId);
+
   return (
     <div className="h-screen">
       <BackButton />
