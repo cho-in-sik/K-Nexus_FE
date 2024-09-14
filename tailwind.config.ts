@@ -10,6 +10,7 @@ const config = {
     './src/**/*.{ts,tsx}',
   ],
   prefix: '',
+
   theme: {
     container: {
       center: true,
@@ -78,7 +79,29 @@ const config = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), require('daisyui')],
+  plugins: [
+    require('tailwindcss-animate'),
+    require('daisyui'),
+    function ({ addUtilities }: any) {
+      const newUtilities = {
+        '.raindrop': {
+          position: 'absolute',
+          width: '300px',
+          height: '300px',
+          left: '0',
+          right: '0',
+          top: '0',
+          bottom: '0',
+          margin: 'auto',
+          border: '100px solid black',
+          'border-radius': '50%',
+          'box-sizing': 'border-box',
+          transform: 'scale(0)',
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
 } satisfies Config;
 
 export default config;

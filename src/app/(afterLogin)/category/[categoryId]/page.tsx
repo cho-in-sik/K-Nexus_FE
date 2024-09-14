@@ -1,5 +1,6 @@
 import BackButton from '../../_components/BackButton';
 import { Test } from '../_components/Test';
+import VoiceAnimation from '../_components/VoiceAnimation';
 
 type Params = {
   params: {
@@ -19,7 +20,9 @@ export default function Page({ params }: Params) {
         {categoryId}
       </div>
       <div className="w-full flex justify-center items-center mb-8">
-        <div className="h-48 w-48 bg-[#D9D9D9] rounded-full"></div>
+        <div className="h-48 w-48 bg-[#D9D9D9] rounded-full">
+          <VoiceAnimation />
+        </div>
       </div>
       <div className="text-center text-sm font-normal mb-10">
         <h6>안녕하세요</h6>
