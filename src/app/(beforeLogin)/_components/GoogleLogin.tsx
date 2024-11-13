@@ -18,8 +18,6 @@ export default function GoogleLogin() {
           : 'http://localhost:3000/auth/callback',
       },
     });
-
-    console.log(data);
   };
   return (
     <button

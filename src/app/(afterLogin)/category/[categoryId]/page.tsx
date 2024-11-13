@@ -1,3 +1,6 @@
+'use client';
+
+import axios from 'axios';
 import BackButton from '../../_components/BackButton';
 import { Test } from '../_components/Test';
 import VoiceAnimation from '../_components/VoiceAnimation';
@@ -10,8 +13,6 @@ type Params = {
 
 export default function Page({ params }: Params) {
   const { categoryId } = params;
-
-  console.log(categoryId);
 
   return (
     <div className="h-screen">

@@ -22,6 +22,8 @@ export function Test() {
         const audioBlob = new Blob(audioChunksRef.current, {
           type: 'audio/webm',
         });
+
+        console.log('blob', audioBlob);
         const audioUrl = URL.createObjectURL(audioBlob);
         setAudioURL(audioUrl);
 
@@ -47,6 +49,8 @@ export function Test() {
     mediaRecorderRef.current.start();
     setIsRecording(true);
   };
+
+  console.log(audioURL);
 
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
