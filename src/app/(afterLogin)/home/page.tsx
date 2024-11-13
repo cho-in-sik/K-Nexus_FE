@@ -1,3 +1,5 @@
+'use client';
+
 import shopping from '@/../public/svgs/home/shopping.svg';
 import travel from '@/../public/svgs/home/travel.svg';
 import airport from '@/../public/svgs/home/airport.svg';
@@ -5,21 +7,21 @@ import alphabet from '@/../public/svgs/home/alphabet.svg';
 import talk from '@/../public/svgs/home/talk.svg';
 import random from '@/../public/svgs/home/random.svg';
 import Image from 'next/image';
-import { createServerSupabaseClient } from '@/app/utils/supabase/server';
-import Link from 'next/link';
-import axios from 'axios';
 
-export default async function Page() {
-  const supabase = await createServerSupabaseClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  console.log(session?.user.user_metadata.full_name);
+import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import { userInfo } from '@/app/api/user';
+
+export default function Page() {
+  const { data } = useQuery({
+    queryKey: ['user'],
+    queryFn: userInfo,
+  });
 
   return (
     <div className="h-screen">
       <div className="w-full h-36 rounded-2xl border-2 border-[#D9D9D9] mt-20 mb-10 text-xl font-medium py-7 pl-6">
-        <h1>{`${session?.user.user_metadata.full_name} 님`}</h1>
+        <h1>{`${data.name} 님`}</h1>
         <h1>안녕하세요.</h1>
         <h1>오늘도 열심히 공부해봐요 💪🏼</h1>
       </div>

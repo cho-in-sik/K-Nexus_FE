@@ -38,25 +38,25 @@ const refreshAccessToken = async () => {
 };
 
 // 토큰 유효성 검사
-customAxios.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  async (error) => {
-    console.log(error);
-    const originalRequest = error.config;
-    if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      await refreshAccessToken();
-      return customAxios(originalRequest);
-    }
-    return Promise.reject(error);
-  },
-);
+// customAxios.interceptors.response.use(
+//   (response) => {
+//     return response;
+//   },
+//   async (error) => {
+//     console.log(error);
+//     const originalRequest = error.config;
+//     if (error.response.status === 401 && !originalRequest._retry) {
+//       originalRequest._retry = true;
+//       await refreshAccessToken();
+//       return customAxios(originalRequest);
+//     }
+//     return Promise.reject(error);
+//   },
+// );
 
 customAxios.interceptors.request.use(
   (config) => {
-    const accessToken: string | null = localStorage.getItem('accessToken');
+    const accessToken: string | null = localStorage.getItem('token');
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
