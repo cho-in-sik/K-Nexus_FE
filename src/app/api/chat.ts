@@ -17,3 +17,21 @@ export const stt = async (audioBlob: any, categoryId: any, chat_id: any) => {
     console.error(error);
   }
 };
+
+export const chatList = async () => {
+  try {
+    const res = await customAxios.get('/api/chatlist');
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const chatDetails = async (chatId: string) => {
+  try {
+    const res = await customAxios.get(`api/chatlist/detail/${chatId}`);
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};

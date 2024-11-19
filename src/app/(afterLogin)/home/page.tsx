@@ -41,7 +41,7 @@ export default function Page() {
             </div>
           </div>
         </Link>
-        <Link href={'/category/talk-friends'}>
+        <Link href={'/category/talk-with-friends'}>
           <div className="h-32 w-40 bg-[#E7E9EC] rounded-lg flex justify-center items-center">
             <div className="flex flex-col justify-center items-center gap-4">
               <Image src={talk} alt="shopping" className="mt-4" />
@@ -59,7 +59,7 @@ export default function Page() {
             </div>
           </div>
         </Link>
-        <Link href={'/category/alphabet'}>
+        <Link href={'/category/learn-alphabet'}>
           <div className="h-32 w-40 bg-[#E7E9EC] rounded-lg flex justify-center items-center">
             <div className="flex flex-col justify-center items-center gap-4">
               <Image src={alphabet} alt="shopping" className="mt-3" />
@@ -75,7 +75,7 @@ export default function Page() {
             </div>
           </div>
         </Link>
-        <Link href={'/category/random'}>
+        <Link href={'/category/random-course'}>
           <div className="h-32 w-40 bg-[#E7E9EC] rounded-lg flex justify-center items-center">
             <div className="flex flex-col justify-center items-center gap-4">
               <Image src={random} alt="shopping" className="mt-3" />

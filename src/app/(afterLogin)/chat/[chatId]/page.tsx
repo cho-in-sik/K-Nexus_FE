@@ -14,6 +14,7 @@ import { getAllMessages, sendChat } from '@/actions/chat';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { useParams } from 'next/navigation';
+import { chatDetails } from '@/app/api/chat';
 
 export default function Page() {
   const { chatId } = useParams();
@@ -27,7 +28,7 @@ export default function Page() {
 
   const getAllMessagesQuery = useQuery({
     queryKey: ['chatMessages', chatId],
-    queryFn: () => getAllMessages(chatId),
+    queryFn: () => chatDetails(chatId as string),
   });
   console.log(getAllMessagesQuery.data);
 
@@ -68,7 +69,7 @@ export default function Page() {
       </div>
       <div className="font-mono">
         {/* 여기에서 채팅 뿌려주기 */}
-        {getAllMessagesQuery.data?.map((chat) => (
+        {getAllMessagesQuery.data?.data?.map((chat: any) => (
           <div key={chat.id}>
             {chat.ai_answer ? (
               <div className="chat chat-start mb-3">
