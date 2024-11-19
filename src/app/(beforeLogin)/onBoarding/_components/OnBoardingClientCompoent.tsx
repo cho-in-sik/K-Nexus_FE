@@ -2,10 +2,11 @@
 
 import { createOnboradingInfo } from '@/actions/onBoarding';
 import { postOnboarding } from '@/app/api/onBoarding';
+import { userInfo } from '@/app/api/user';
 import { onBoardingData } from '@/app/constants/onBoarding';
 
 import { useOnBoarding } from '@/hooks/useOnBoarding';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -17,6 +18,12 @@ export default function OnBoardingClientComponent() {
   const [selectedValue, setSelectedValue] = useState('');
 
   const router = useRouter();
+
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: userInfo,
+  });
+  console.log(user);
 
   const updateMutation = useMutation({
     mutationFn: async () => {
@@ -33,7 +40,10 @@ export default function OnBoardingClientComponent() {
     if (step > 3) {
       router.push('/'); // 메인 페이지로 이동
     }
-  }, [step, router]);
+    if (user?.onboarding) {
+      router.push('/');
+    }
+  }, [step, router, user]);
 
   const handleNext = () => {
     if (step === 0) {

@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import BackButton from '../../_components/BackButton';
 import { Test } from '../_components/Test';
 import VoiceAnimation from '../_components/VoiceAnimation';

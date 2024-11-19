@@ -11,6 +11,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { userInfo } from '@/app/api/user';
+import { redirect } from 'next/navigation';
 
 export default function Page() {
   const { data } = useQuery({
@@ -18,10 +19,16 @@ export default function Page() {
     queryFn: userInfo,
   });
 
+  const token = localStorage.getItem('token');
+
+  if (!data && !token) {
+    redirect('/login');
+  }
+
   return (
     <div className="h-screen">
       <div className="w-full h-36 rounded-2xl border-2 border-[#D9D9D9] mt-20 mb-10 text-xl font-medium py-7 pl-6">
-        <h1>{`${data.name} 님`}</h1>
+        <h1>{`${data?.name} 님`}</h1>
         <h1>안녕하세요.</h1>
         <h1>오늘도 열심히 공부해봐요 💪🏼</h1>
       </div>
