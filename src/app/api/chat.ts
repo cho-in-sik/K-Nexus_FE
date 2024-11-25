@@ -35,3 +35,16 @@ export const chatDetails = async (chatId: string) => {
     console.log(error);
   }
 };
+
+export const postChat = async ({ situation, message, chat_id }: any) => {
+  try {
+    const res = await customAxios.post('/api/ai/chat', {
+      situation,
+      message,
+      chat_id,
+    });
+    return res;
+  } catch (error) {
+    console.log(error);
+  }
+};

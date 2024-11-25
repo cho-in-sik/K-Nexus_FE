@@ -14,31 +14,38 @@ import { getAllMessages, sendChat } from '@/actions/chat';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { useParams } from 'next/navigation';
-import { chatDetails } from '@/app/api/chat';
+import { chatDetails, postChat } from '@/app/api/chat';
+
+type TChat = {
+  chat_id: string;
+  created_at: string;
+  is_answer: boolean;
+  message: string;
+  message_id: number;
+};
 
 export default function Page() {
   const { chatId } = useParams();
 
   const [text, setText] = useState('');
 
-  const handleButton = () => {
-    console.log(1);
-    getSpeech('티티에스');
+  const handleButton = (message: string) => {
+    getSpeech(message);
   };
 
   const getAllMessagesQuery = useQuery({
     queryKey: ['chatMessages', chatId],
     queryFn: () => chatDetails(chatId as string),
   });
-  console.log(getAllMessagesQuery.data);
 
   const sendMessageMutation = useMutation({
     mutationFn: async () => {
-      sendChat({
+      const res = await postChat({
         message: text,
         chatId,
-        ai_answer: false,
+        situation: getAllMessagesQuery.data?.data?.situation,
       });
+      return res;
     },
     onSuccess: () => {
       setText('');
@@ -46,6 +53,8 @@ export default function Page() {
       getAllMessagesQuery.refetch();
     },
   });
+
+  console.log(getAllMessagesQuery.data);
   return (
     <div>
       <BackButton />
@@ -67,11 +76,11 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div className="font-mono">
+      <div className="font-mono h-full">
         {/* 여기에서 채팅 뿌려주기 */}
-        {getAllMessagesQuery.data?.data?.map((chat: any) => (
-          <div key={chat.id}>
-            {chat.ai_answer ? (
+        {getAllMessagesQuery?.data?.data?.messages.map((chat: TChat) => (
+          <div key={chat.message_id}>
+            {chat.is_answer ? (
               <div className="chat chat-start mb-3">
                 <div className="chat-image avatar">
                   <div className="w-8 rounded-full shadow-xl">
@@ -81,7 +90,11 @@ export default function Page() {
                 <div className="chat-bubble bg-[#EEE] text-black flex">
                   <span>{chat.message}</span>
 
-                  <Image src={sound} alt="sound" onClick={handleButton} />
+                  <Image
+                    src={sound}
+                    alt="sound"
+                    onClick={() => handleButton(chat.message)}
+                  />
                 </div>
               </div>
             ) : (
@@ -102,8 +115,9 @@ export default function Page() {
           </div>
         ))}
       </div>
+      <div className="h-36 w-full"></div>
 
-      <div className="fixed bottom-28 w-11/12 h-14 rounded-3xl shadow-xl flex justify-center items-center gap-2">
+      <div className="fixed bottom-28 w-11/12 h-14 rounded-3xl shadow-xl flex justify-center items-center gap-2 bg-white">
         <input
           type="text"
           className="w-full rounded-3xl pl-5 placeholder:text-xs outline-none"
