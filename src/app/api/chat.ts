@@ -36,12 +36,12 @@ export const chatDetails = async (chatId: string) => {
   }
 };
 
-export const postChat = async ({ situation, message, chat_id }: any) => {
+export const postChat = async ({ situation, message, chatId }: any) => {
   try {
     const res = await customAxios.post('/api/ai/chat', {
       situation,
       message,
-      chat_id,
+      chat_id: chatId,
     });
     return res;
   } catch (error) {

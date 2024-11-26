@@ -17,7 +17,7 @@ export default async function Page() {
         <ChatListBox />
       </div>
 
-      <div className="absolute bottom-28 right-10 dropdown dropdown-top dropdown-end">
+      <div className="fixed bottom-28 right-10 dropdown dropdown-top dropdown-end">
         <button
           tabIndex={0}
           role="button"

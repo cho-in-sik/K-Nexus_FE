@@ -37,6 +37,7 @@ export default function Page() {
     queryKey: ['chatMessages', chatId],
     queryFn: () => chatDetails(chatId as string),
   });
+  console.log(chatId);
 
   const sendMessageMutation = useMutation({
     mutationFn: async () => {
@@ -45,6 +46,7 @@ export default function Page() {
         chatId,
         situation: getAllMessagesQuery.data?.data?.situation,
       });
+      console.log(res);
       return res;
     },
     onSuccess: () => {
@@ -54,7 +56,8 @@ export default function Page() {
     },
   });
 
-  console.log(getAllMessagesQuery.data);
+  console.log('mutation보낸 상태', sendMessageMutation.data);
+  console.log('리스크 쿼리 불러오는 데이터', getAllMessagesQuery.data);
   return (
     <div>
       <BackButton />
