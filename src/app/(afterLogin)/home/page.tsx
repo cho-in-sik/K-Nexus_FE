@@ -1,3 +1,5 @@
+'use client';
+
 import shopping from '@/../public/svgs/home/shopping.svg';
 import travel from '@/../public/svgs/home/travel.svg';
 import airport from '@/../public/svgs/home/airport.svg';
@@ -5,21 +7,28 @@ import alphabet from '@/../public/svgs/home/alphabet.svg';
 import talk from '@/../public/svgs/home/talk.svg';
 import random from '@/../public/svgs/home/random.svg';
 import Image from 'next/image';
-import { createServerSupabaseClient } from '@/app/utils/supabase/server';
-import Link from 'next/link';
-import axios from 'axios';
 
-export default async function Page() {
-  const supabase = await createServerSupabaseClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-  console.log(session?.user.user_metadata.full_name);
+import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import { userInfo } from '@/app/api/user';
+import { redirect } from 'next/navigation';
+
+export default function Page() {
+  const { data } = useQuery({
+    queryKey: ['user'],
+    queryFn: userInfo,
+  });
+
+  const token = localStorage.getItem('token');
+
+  if (!data && !token) {
+    redirect('/login');
+  }
 
   return (
     <div className="h-screen">
       <div className="w-full h-36 rounded-2xl border-2 border-[#D9D9D9] mt-20 mb-10 text-xl font-medium py-7 pl-6">
-        <h1>{`${session?.user.user_metadata.full_name} 님`}</h1>
+        <h1>{`${data?.name} 님`}</h1>
         <h1>안녕하세요.</h1>
         <h1>오늘도 열심히 공부해봐요 💪🏼</h1>
       </div>
@@ -32,7 +41,7 @@ export default async function Page() {
             </div>
           </div>
         </Link>
-        <Link href={'/category/talk-friends'}>
+        <Link href={'/category/talk-with-friends'}>
           <div className="h-32 w-40 bg-[#E7E9EC] rounded-lg flex justify-center items-center">
             <div className="flex flex-col justify-center items-center gap-4">
               <Image src={talk} alt="shopping" className="mt-4" />
@@ -50,7 +59,7 @@ export default async function Page() {
             </div>
           </div>
         </Link>
-        <Link href={'/category/alphabet'}>
+        <Link href={'/category/learn-alphabet'}>
           <div className="h-32 w-40 bg-[#E7E9EC] rounded-lg flex justify-center items-center">
             <div className="flex flex-col justify-center items-center gap-4">
               <Image src={alphabet} alt="shopping" className="mt-3" />
@@ -66,7 +75,7 @@ export default async function Page() {
             </div>
           </div>
         </Link>
-        <Link href={'/category/random'}>
+        <Link href={'/category/random-course'}>
           <div className="h-32 w-40 bg-[#E7E9EC] rounded-lg flex justify-center items-center">
             <div className="flex flex-col justify-center items-center gap-4">
               <Image src={random} alt="shopping" className="mt-3" />

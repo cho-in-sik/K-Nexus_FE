@@ -1,28 +1,36 @@
 'use client';
 
 import { createOnboradingInfo } from '@/actions/onBoarding';
+import { postOnboarding } from '@/app/api/onBoarding';
+import { userInfo } from '@/app/api/user';
 import { onBoardingData } from '@/app/constants/onBoarding';
 
 import { useOnBoarding } from '@/hooks/useOnBoarding';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function OnBoardingClientComponent({ id }: any) {
+export default function OnBoardingClientComponent() {
   const { setSteps, steps } = useOnBoarding();
   const [step, setStep] = useState(0);
   const [disabled, setDisabled] = useState(true);
   const [selectedValue, setSelectedValue] = useState('');
 
-  const navigate = useRouter();
+  const router = useRouter();
+
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: userInfo,
+  });
+  console.log(user);
 
   const updateMutation = useMutation({
     mutationFn: async () => {
-      const data = await createOnboradingInfo({ steps, id });
+      const data = await postOnboarding(steps);
       return data;
     },
-    onSuccess: () => alert('success'),
+    onSuccess: () => router.push('/'),
     onError: () => {
       alert('Failed to update onboarding info');
     },
@@ -30,9 +38,12 @@ export default function OnBoardingClientComponent({ id }: any) {
 
   useEffect(() => {
     if (step > 3) {
-      navigate.push('/'); // 메인 페이지로 이동
+      router.push('/'); // 메인 페이지로 이동
     }
-  }, [step, navigate]);
+    if (user?.onboarding) {
+      router.push('/');
+    }
+  }, [step, router, user]);
 
   const handleNext = () => {
     if (step === 0) {

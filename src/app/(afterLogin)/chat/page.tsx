@@ -5,19 +5,19 @@ import { createServerSupabaseClient } from '@/app/utils/supabase/server';
 import ChatListBox from './_components/chatListBox';
 
 export default async function Page() {
-  const supabase = await createServerSupabaseClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
+  // const supabase = await createServerSupabaseClient();
+  // const {
+  //   data: { session },
+  // } = await supabase.auth.getSession();
 
   return (
     <div className="">
       <h1 className="text-center mt-5 mb-10">Chat List</h1>
       <div className="w-full">
-        <ChatListBox session={session} />
+        <ChatListBox />
       </div>
 
-      <div className="absolute bottom-28 right-10 dropdown dropdown-top dropdown-end">
+      <div className="fixed bottom-28 right-10 dropdown dropdown-top dropdown-end">
         <button
           tabIndex={0}
           role="button"

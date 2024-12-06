@@ -1,4 +1,6 @@
 'use client';
+import { stt } from '@/app/api/chat';
+import { useParams } from 'next/navigation';
 import { useState, useRef } from 'react';
 
 export function Test() {
@@ -7,6 +9,7 @@ export function Test() {
   const [audioURL, setAudioURL] = useState<string | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
+  const { categoryId } = useParams();
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -23,26 +26,15 @@ export function Test() {
           type: 'audio/webm',
         });
 
-        console.log('blob', audioBlob);
+        console.log(audioBlob);
+
         const audioUrl = URL.createObjectURL(audioBlob);
         setAudioURL(audioUrl);
 
-        //AI 통신 서버 구축되면 여기로직으로 통신해보기 blob형태로 주고받기
-        //FAST API
-        //받으면 바로 음성으로 출력해줘야하는데 util에 만들어 놓은 함수로 송출 ? (tts)
+        const chat_id = null;
 
-        // const formData = new FormData();
-        // formData.append('audio', audioBlob);
-
-        // console.log(audioBlob);
-
-        // const response = await fetch('http://localhost:3000/upload', {
-        //   method: 'POST',
-        //   body: formData,
-        // });
-
-        // const result = await response.json();
-        // setTranscription(result.transcription);
+        const res = await stt(audioBlob, categoryId, chat_id);
+        console.log(res);
       }
     };
 
