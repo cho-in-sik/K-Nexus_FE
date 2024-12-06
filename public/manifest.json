@@ -1,0 +1,26 @@
+{
+  "theme_color": "#1d46d6",
+  "background_color": "#1d46d6",
+  "icons": [
+    {
+      "purpose": "maskable",
+      "sizes": "512x512",
+      "src": "/images/icon512_maskable.png",
+      "type": "image/png"
+    },
+    {
+      "purpose": "any",
+      "sizes": "512x512",
+      "src": "/images/icon512_rounded.png",
+      "type": "image/png"
+    }
+  ],
+  "orientation": "any",
+  "display": "standalone",
+  "dir": "auto",
+  "lang": "ko-KR",
+  "name": "Kolan",
+  "short_name": "Kolang",
+  "start_url": "/",
+  "scope": "/"
+}

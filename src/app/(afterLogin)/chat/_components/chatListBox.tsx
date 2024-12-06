@@ -12,6 +12,7 @@ export default function ChatListBox() {
   console.log(data);
   return (
     <div>
+      {!data && <div>채팅 리스트가 없습니다.</div>}
       {data?.data.map((item: any) => (
         <Link href={`chat/${item.chat_id}`} key={item.chat_id}>
           <div className="flex justify-center items-center">
