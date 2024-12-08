@@ -1,6 +1,7 @@
 {
   "theme_color": "#1d46d6",
   "background_color": "#1d46d6",
+  "description": "kolang-service",
   "icons": [
     {
       "purpose": "maskable",
@@ -22,5 +23,21 @@
   "name": "Kolan",
   "short_name": "Kolang",
   "start_url": "/",
-  "scope": "/"
+  "scope": "/",
+  "screenshots": [
+    {
+      "src": "/images/icon512_maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any",
+      "form_factor": "wide",
+      "label": "Wonder Widgets"
+    },
+    {
+      "src": "/images/icon512_rounded.png",
+      "sizes": "512X512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }
