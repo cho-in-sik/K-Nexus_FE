@@ -22,7 +22,7 @@ export default function VoiceAnimation() {
     },
   );
 
-  const raindropScene = scene.getItem('.raindrop');
+  const raindropScene = (scene as any).getItem('.raindrop');
 
   const frame1 = useNowFrame(raindropScene.getItem(0));
   const frame2 = useNowFrame(raindropScene.getItem(1));
