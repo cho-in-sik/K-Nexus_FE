@@ -10,20 +10,27 @@ import Image from 'next/image';
 
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import { userInfo } from '@/app/api/user';
+
 import { redirect } from 'next/navigation';
+import { useToken } from '@/hooks/useToken';
+import { userInfo } from '@/app/api/user';
 
 export default function Page() {
+  const token = useToken();
   const { data } = useQuery({
     queryKey: ['user'],
     queryFn: userInfo,
+    enabled: !!token, // 토큰이 있을 때만 쿼리 실행
   });
 
-  const token = localStorage.getItem('token');
-
+  if (token === null) {
+    return null;
+  }
   if (!data && !token) {
     redirect('/login');
   }
+
+  console.log(data);
 
   return (
     <div className="h-screen">

@@ -12,7 +12,8 @@ const fontSans = FontSans({
 export const metadata: Metadata = {
   title: 'Kolang',
   description: 'Kolang next app',
-  themeColor: '#1d46d6',
+
+  manifest: '/manifest.json',
   icons: {
     other: [
       {
