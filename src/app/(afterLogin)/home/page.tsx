@@ -23,10 +23,9 @@ export default function Page() {
     enabled: !!token, // 토큰이 있을 때만 쿼리 실행
   });
 
-  if (token === null) {
-    return null;
-  }
-  if (!data && !token) {
+  console.log(data);
+  console.log(token);
+  if (!data || !token) {
     redirect('/login');
   }
 
