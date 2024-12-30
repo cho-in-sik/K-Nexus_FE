@@ -5,7 +5,7 @@ import BackButton from '../../_components/BackButton';
 import VoiceAnimation from '../_components/VoiceAnimation';
 import { stt } from '@/app/api/chat';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import mic from '@/../public/svgs/play/mic.svg';
 import Image from 'next/image';
 import { Span } from 'next/dist/trace';
@@ -34,6 +34,7 @@ export default function Page({ params }: Params) {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const [response, setResponse] = useState<Message>();
+  const [hasSpoken, setHasSpoken] = useState(false);
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -61,6 +62,7 @@ export default function Page({ params }: Params) {
         const res = await stt(audioBlob, categoryId, chat_id);
         if (res?.status === 200) {
           setResponse(res?.data);
+          setHasSpoken(false);
         }
         setIsLoading(false);
       }
@@ -78,6 +80,13 @@ export default function Page({ params }: Params) {
     }
     setIsRecording(false);
   };
+
+  useEffect(() => {
+    if (response && !hasSpoken) {
+      getSpeech(response.response);
+      setHasSpoken(true);
+    }
+  }, [response, hasSpoken]);
 
   return (
     <div className="h-screen flex flex-col">
@@ -132,7 +141,6 @@ export default function Page({ params }: Params) {
             </div>
           )} */}
         </div>
-        <div>{response ? getSpeech(response.response) : null}</div>
       </div>
 
       {/* daf 테스트 안에서 텍스트 전부 보여주기 테스트는 통신 컴포넌트 & 결과 확인 컴포넌트가 같이 있는 방향으로  */}
