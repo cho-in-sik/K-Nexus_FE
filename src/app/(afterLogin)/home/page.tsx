@@ -12,11 +12,12 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 
 import { redirect } from 'next/navigation';
-import { useToken } from '@/hooks/useToken';
+
 import { userInfo } from '@/app/api/user';
+import { getLocalStorage } from '@/app/utils/handleToken';
 
 export default function Page() {
-  const token = useToken();
+  const token = getLocalStorage();
   const { data } = useQuery({
     queryKey: ['user'],
     queryFn: userInfo,
