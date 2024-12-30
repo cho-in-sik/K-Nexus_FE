@@ -61,8 +61,11 @@ export default function Page({ params }: Params) {
 
         const res = await stt(audioBlob, categoryId, chat_id);
         if (res?.status === 200) {
+          console.log('STT Response:', res.data);
           setResponse(res?.data);
-          setHasSpoken(false);
+          setHasSpoken(false); // 음성이 재생되도록 플래그 초기화
+        } else {
+          console.error('STT Failed:', res);
         }
         setIsLoading(false);
       }
@@ -82,7 +85,9 @@ export default function Page({ params }: Params) {
   };
 
   useEffect(() => {
+    console.log('useEffect triggered:', { response, hasSpoken }); // 상태 디버깅
     if (response && !hasSpoken) {
+      console.log('Calling getSpeech:', response.response); // 호출 디버깅
       getSpeech(response.response);
       setHasSpoken(true);
     }
@@ -128,22 +133,8 @@ export default function Page({ params }: Params) {
               </div>
             )}
           </button>
-          {/* {audioURL && (
-        <div>
-          <h2>Recorded Audio:</h2>
-          <audio controls src={audioURL}></audio>
-        </div>
-      )} */}
-          {/* {transcription && (
-            <div>
-              <h2>Transcription:</h2>
-              <p>{transcription}</p>
-            </div>
-          )} */}
         </div>
       </div>
-
-      {/* daf 테스트 안에서 텍스트 전부 보여주기 테스트는 통신 컴포넌트 & 결과 확인 컴포넌트가 같이 있는 방향으로  */}
     </div>
   );
 }
