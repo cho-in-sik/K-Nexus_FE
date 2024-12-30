@@ -7,7 +7,7 @@ import back from '@/../public/svgs/back.svg';
 export default function BackButton() {
   const router = useRouter();
   return (
-    <div onClick={() => router.back()} className="absolute">
+    <div onClick={() => router.back()} className="absolute mt-12">
       <Image src={back} alt="backBtn" />
     </div>
   );

@@ -39,4 +39,5 @@ export const getSpeech = (text: any) => {
   };
 
   speech(text);
+  return null;
 };
