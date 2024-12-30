@@ -12,24 +12,24 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 
 import { redirect } from 'next/navigation';
-import { useToken } from '@/hooks/useToken';
+
 import { userInfo } from '@/app/api/user';
+import { getLocalStorage } from '@/app/utils/handleToken';
 
 export default function Page() {
-  const token = useToken();
+  const token = getLocalStorage();
   const { data } = useQuery({
     queryKey: ['user'],
     queryFn: userInfo,
-    enabled: !!token, // 토큰이 있을 때만 쿼리 실행
+    // enabled: !!token, // 토큰이 있을 때만 쿼리 실행
   });
 
-  console.log(data);
-  console.log(token);
-  if (!data || !token) {
-    redirect('/login');
+  if (!token) {
+    redirect('/');
   }
 
   console.log(data);
+  console.log(token);
 
   return (
     <div className="h-screen">

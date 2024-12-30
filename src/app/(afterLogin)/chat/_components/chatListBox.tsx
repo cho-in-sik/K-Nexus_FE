@@ -7,7 +7,7 @@ import Link from 'next/link';
 export default function ChatListBox() {
   const { data } = useQuery({
     queryKey: ['chatLists'],
-    queryFn: () => chatList(),
+    queryFn: chatList,
   });
   console.log(data);
   return (
