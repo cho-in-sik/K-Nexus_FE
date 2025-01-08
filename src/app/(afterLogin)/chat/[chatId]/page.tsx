@@ -29,10 +29,6 @@ export default function Page() {
 
   const [text, setText] = useState('');
 
-  const handleButton = (message: string) => {
-    getSpeech(message);
-  };
-
   const getAllMessagesQuery = useQuery({
     queryKey: ['chatMessages', chatId],
     queryFn: () => chatDetails(chatId as string),
@@ -96,7 +92,7 @@ export default function Page() {
                   <Image
                     src={sound}
                     alt="sound"
-                    onClick={() => handleButton(chat.message)}
+                    onClick={() => getSpeech(chat.message)}
                   />
                 </div>
               </div>
@@ -120,7 +116,7 @@ export default function Page() {
       </div>
       <div className="h-36 w-full mb-6"></div>
 
-      <div className="fixed bottom-28 w-11/12 h-14 rounded-3xl shadow-xl flex justify-center items-center gap-2 bg-white">
+      <div className="fixed bottom-24 w-11/12 h-14 rounded-3xl shadow-xl flex justify-center items-center gap-2 bg-white">
         <input
           type="text"
           className="w-full rounded-3xl pl-5 placeholder:text-xs outline-none"
