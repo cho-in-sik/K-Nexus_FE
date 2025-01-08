@@ -2,13 +2,12 @@
 
 import BackButton from '../../_components/BackButton';
 
-import VoiceAnimation from '../_components/VoiceAnimation';
 import { stt } from '@/app/api/chat';
 
 import { useState, useRef, useEffect } from 'react';
 import mic from '@/../public/svgs/play/mic.svg';
 import Image from 'next/image';
-import { Span } from 'next/dist/trace';
+
 import { getSpeech } from '@/app/utils/getSpeech';
 
 type Params = {
@@ -29,7 +28,7 @@ export default function Page({ params }: Params) {
   const { categoryId } = params;
   const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [transcription, setTranscription] = useState('');
+
   const [audioURL, setAudioURL] = useState<string | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -95,7 +94,7 @@ export default function Page({ params }: Params) {
 
   return (
     <div className="h-screen flex flex-col">
-      <BackButton />
+      <BackButton marginTop="12" />
       <div className="text-lg font-medium text-center mt-12 mb-24">
         {categoryId}
       </div>
