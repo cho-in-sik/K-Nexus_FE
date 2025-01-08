@@ -25,7 +25,7 @@ export default function Page() {
   });
 
   if (!token) {
-    redirect('/');
+    redirect('/login');
   }
 
   console.log(data);

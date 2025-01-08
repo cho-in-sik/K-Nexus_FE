@@ -21,6 +21,7 @@ export const stt = async (audioBlob: any, categoryId: any, chat_id: any) => {
 export const chatList = async () => {
   try {
     const res = await customAxios.get('/api/chatlist');
+
     return res;
   } catch (error) {
     console.log(error);

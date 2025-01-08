@@ -37,7 +37,7 @@ export default function Page() {
     queryKey: ['chatMessages', chatId],
     queryFn: () => chatDetails(chatId as string),
   });
-  console.log(chatId);
+  console.log('fetching..', getAllMessagesQuery.isFetching);
 
   const sendMessageMutation = useMutation({
     mutationFn: async () => {
@@ -46,12 +46,12 @@ export default function Page() {
         chatId,
         situation: getAllMessagesQuery.data?.data?.situation,
       });
-      console.log(res);
+
       return res;
     },
     onSuccess: () => {
       setText('');
-      console.log('success');
+
       getAllMessagesQuery.refetch();
     },
   });
@@ -60,7 +60,7 @@ export default function Page() {
   console.log('리스크 쿼리 불러오는 데이터', getAllMessagesQuery.data);
   return (
     <div>
-      <BackButton />
+      <BackButton marginTop="2" />
 
       <div className="mt-10 w-full border-b-2  mb-4">
         <div className="flex justify-start items-center pb-1">
@@ -118,7 +118,7 @@ export default function Page() {
           </div>
         ))}
       </div>
-      <div className="h-36 w-full"></div>
+      <div className="h-36 w-full mb-6"></div>
 
       <div className="fixed bottom-28 w-11/12 h-14 rounded-3xl shadow-xl flex justify-center items-center gap-2 bg-white">
         <input
@@ -132,7 +132,11 @@ export default function Page() {
           <Image src={mic} alt="mic" />
         </div>
         <div className="mr-3" onClick={() => sendMessageMutation.mutate()}>
-          <Image src={send} alt="send" />
+          {sendMessageMutation.isPending ? (
+            <span className="loading loading-spinner loading-md"></span>
+          ) : (
+            <Image src={send} alt="send" />
+          )}
         </div>
       </div>
     </div>
