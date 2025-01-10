@@ -48,7 +48,7 @@ export default function Page({ params }: Params) {
       if (audioChunksRef.current.length > 0) {
         setIsLoading(true);
         const audioBlob = new Blob(audioChunksRef.current, {
-          type: 'audio/webm',
+          type: 'audio/mp4',
         });
 
         console.log(audioBlob);
@@ -64,6 +64,7 @@ export default function Page({ params }: Params) {
           setResponse(res?.data);
           setHasSpoken(false); // 음성이 재생되도록 플래그 초기화
         } else {
+          alert('다시 시도해주세요');
           console.error('STT Failed:', res);
         }
         setIsLoading(false);
@@ -73,6 +74,10 @@ export default function Page({ params }: Params) {
     mediaRecorderRef.current.start();
     setIsRecording(true);
   };
+
+  console.log(MediaRecorder.isTypeSupported('audio/webm')); // false일 가능성 높음
+  console.log(MediaRecorder.isTypeSupported('audio/mp4')); // true일 가능성 높음
+  console.log(MediaRecorder.isTypeSupported('audio/ogg')); // true일 가능성 있음
 
   console.log(response);
 
