@@ -8,7 +8,6 @@ export const getSpeech = async (text: string) => {
       if (voices.length) {
         resolve(voices);
       } else {
-        // onvoiceschanged 이벤트로 음성 로드 대기
         window.speechSynthesis.onvoiceschanged = () => {
           voices = window.speechSynthesis.getVoices();
           resolve(voices);
@@ -23,7 +22,6 @@ export const getSpeech = async (text: string) => {
     const utterThis = new SpeechSynthesisUtterance(txt);
     utterThis.lang = lang;
 
-    // 한국어 목소리 찾기
     const korVoice = voices.find(
       (voice) => voice.lang === lang || voice.lang === lang.replace('-', '_'),
     );
@@ -35,7 +33,6 @@ export const getSpeech = async (text: string) => {
       return;
     }
 
-    // 음성 재생
     window.speechSynthesis.speak(utterThis);
   };
 
