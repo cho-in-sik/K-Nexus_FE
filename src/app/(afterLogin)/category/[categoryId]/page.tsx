@@ -28,8 +28,8 @@ export default function Page({ params }: Params) {
   const { categoryId } = params;
   const [isRecording, setIsRecording] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [chatId, setChatId] = useState<string | null>(null);
 
-  const [audioURL, setAudioURL] = useState<string | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const [response, setResponse] = useState<Message>();
@@ -51,16 +51,10 @@ export default function Page({ params }: Params) {
           type: 'audio/mp4',
         });
 
-        console.log(audioBlob);
-
-        const audioUrl = URL.createObjectURL(audioBlob);
-        setAudioURL(audioUrl);
-
-        const chat_id = null;
-
-        const res = await stt(audioBlob, categoryId, chat_id);
+        const res = await stt(audioBlob, categoryId, chatId);
         if (res?.status === 200) {
           console.log('STT Response:', res.data);
+          setChatId(res?.data.chat_id);
           setResponse(res?.data);
           setHasSpoken(false); // 음성이 재생되도록 플래그 초기화
         } else {
@@ -75,11 +69,12 @@ export default function Page({ params }: Params) {
     setIsRecording(true);
   };
 
-  console.log(MediaRecorder.isTypeSupported('audio/webm')); // false일 가능성 높음
-  console.log(MediaRecorder.isTypeSupported('audio/mp4')); // true일 가능성 높음
-  console.log(MediaRecorder.isTypeSupported('audio/ogg')); // true일 가능성 있음
+  // console.log(MediaRecorder.isTypeSupported('audio/webm')); // false일 가능성 높음
+  // console.log(MediaRecorder.isTypeSupported('audio/mp4')); // true일 가능성 높음
+  // console.log(MediaRecorder.isTypeSupported('audio/ogg')); // true일 가능성 있음
 
   console.log(response);
+  console.log(chatId);
 
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
@@ -89,9 +84,7 @@ export default function Page({ params }: Params) {
   };
 
   useEffect(() => {
-    console.log('useEffect triggered:', { response, hasSpoken }); // 상태 디버깅
     if (response && !hasSpoken) {
-      console.log('Calling getSpeech:', response.response); // 호출 디버깅
       getSpeech(response.response);
       setHasSpoken(true);
     }

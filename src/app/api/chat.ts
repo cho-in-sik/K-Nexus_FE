@@ -1,6 +1,7 @@
 import customAxios from '../utils/customAxios';
 
 export const stt = async (audioBlob: any, categoryId: any, chat_id: any) => {
+  console.log(chat_id);
   try {
     const res = await customAxios.post(
       '/api/ai/stc',
