@@ -13,7 +13,7 @@ export const stt = async (audioBlob: any, categoryId: any, chat_id: any) => {
       },
     );
     console.log(res);
-    return res;
+    return res.data;
   } catch (error) {
     console.error(error);
   }
